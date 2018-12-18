@@ -4,12 +4,7 @@ import brick
 import paddle
 import random
 
-class Paddle(pygame.sprite.Sprite):
-    def __init__(self, width, height, color):
-        self.width = width
-        self.height = height
-        self.color = color
-        self.image = pygame.Surface((self.width, self.height))
+
 def main():
     # Constants that will be used in the program
 
@@ -17,7 +12,7 @@ def main():
     APPLICATION_HEIGHT = 600
     PADDLE_Y_OFFSET = 30
     BRICKS_PER_ROW = 10
-    BRICK_SEP = 4  # The space between each brick
+    BRICK_SEP = 4  # The space between each brick
     BRICK_Y_OFFSET = 70
     BRICK_WIDTH = (APPLICATION_WIDTH - (BRICKS_PER_ROW -1) * BRICK_SEP) / BRICKS_PER_ROW
     BRICK_HEIGHT = 8
@@ -51,12 +46,12 @@ def main():
     x = 0
     y = BRICK_Y_OFFSET
 
-    q = PADDLE_Y_OFFSET
+    q = APPLICATION_HEIGHT - PADDLE_Y_OFFSET
     r = (APPLICATION_WIDTH/2)
-    bigballer = paddle.Paddle(PADDLE_WIDTH, PADDLE_HEIGHT, whites)
+    bigballer = paddle.Paddle(mainSurface, whites[0], PADDLE_WIDTH, PADDLE_HEIGHT)
     bigballer.rect.x = r
     bigballer.rect.y = q
-    mainSurface.blit(paddle.image, paddle.rect)
+    mainSurface.blit(bigballer.image, bigballer.rect)
     pygame.display.update()
 
 
@@ -77,5 +72,6 @@ def main():
             if event == QUIT:
                 pygame.quit()
                 sys.exit()
+        pygame.display.update()
 
 main()
