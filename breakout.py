@@ -2,6 +2,7 @@ import pygame, sys
 from pygame.locals import *
 import brick
 import paddle
+import ball
 import random
 
 
@@ -53,6 +54,7 @@ def main():
     bigballer.rect.y = q
     mainSurface.blit(bigballer.image, bigballer.rect)
     pygame.display.update()
+    brick_group = pygame.sprite.Group()
 
 
     for m in range(BRICKS_PER_ROW):
@@ -60,6 +62,7 @@ def main():
         color = colors[m]
         for b in range(BRICKS_PER_ROW):
             bricks = brick.Brick(BRICK_WIDTH, BRICK_HEIGHT, color)
+            brick_group.add(bricks)
             bricks.rect.x = x
             bricks.rect.y = y
             mainSurface.blit(bricks.image, bricks.rect)
@@ -72,6 +75,11 @@ def main():
             if event == QUIT:
                 pygame.quit()
                 sys.exit()
+        mainSurface.fill(BLACK)
+        for bricks in brick_group:
+            mainSurface.blit(bricks.image, bricks.rect)
+            bigballer.move()
+        mainSurface.blit(bigballer.image, bigballer.rect)
         pygame.display.update()
 
 main()

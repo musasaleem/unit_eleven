@@ -21,4 +21,5 @@ class Paddle(pygame.sprite.Sprite):
         self.image.fill(self.color)
 
     def move(self):
-        pass
+        position = pygame.mouse.get_pos()
+        self.rect.x = position[0]
