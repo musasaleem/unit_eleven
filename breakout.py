@@ -55,6 +55,9 @@ def main():
     mainSurface.blit(bigballer.image, bigballer.rect)
     pygame.display.update()
     brick_group = pygame.sprite.Group()
+    ballz = ball.Ball(WHITE, APPLICATION_WIDTH, APPLICATION_HEIGHT, RADIUS_OF_BALL)
+    ballz.rect.y = APPLICATION_HEIGHT/2
+    ballz.rect.x = APPLICATION_WIDTH/2
 
 
     for m in range(BRICKS_PER_ROW):
@@ -78,8 +81,24 @@ def main():
         mainSurface.fill(BLACK)
         for bricks in brick_group:
             mainSurface.blit(bricks.image, bricks.rect)
-            bigballer.move()
+
+        bigballer.move()
         mainSurface.blit(bigballer.image, bigballer.rect)
+        ballz.move()
+        mainSurface.blit(ballz.image, ballz.rect)
         pygame.display.update()
+
+        ballz.collide(paddle_group, brick_group)
+        if ballz.rect.bottom >= APPLICATION_HEIGHT:
+            ballz.rect.x = 205
+            ballz.rect.y = 300
+            NUM_TURNS -= 1
+            if NUM_TURNS == 0:
+                pygame.quit()
+                sys.exit()
+        if len(brick_group) == 0:
+            pygame.quit()
+            sys.exit()
+
 
 main()
