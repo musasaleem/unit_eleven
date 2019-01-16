@@ -1,14 +1,49 @@
 import pygame
+import random
 
-
-class Block:
+class Block(pygame.sprite.Sprite):
 
     def __init__(self, screen, width, height, color):
+        """
+        Getting the screen, width, height and color of the blocks
+        :param screen: self.screen
+        :param width: self.width
+        :param height: self.height
+        :param color: self.color
+        """
+        super().__init__()
         self.screen = screen
         self.width = width
         self.height = height
         self.color = color
+        self.x_speed = 3
+        self.y_speed = 4
 
         self.image = pygame.Surface((self.width, self.height))
         self.rect = self.image.get_rect()
         self.image.fill(self.color)
+
+    def move(self):
+        """
+        Placing the blocks on the screen
+        :return:
+        """
+        screen_width = self.screen.get_width()
+        screen_height = self.screen.get_height()
+        self.rect.x += self.x_speed
+        self.rect.y += self.y_speed
+
+        if self.rect.left <= 0 or self.rect.right >= screen_width:
+            self.x_speed = -self.x_speed
+        if self.rect.top <= 0 or self.rect.bottom >= screen_height:
+            self.y_speed = -self.y_speed
+
+    def collide(self, block_group):
+        """
+        The collide method for when the ball will collide with the block
+        :param block_group:
+        :return:
+        """
+        if pygame.sprite.spritecollide(self, block_group, False):
+            self.x_speed = -self.x_speed
+            self.y_speed = -self.y_speed

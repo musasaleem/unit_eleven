@@ -1,9 +1,20 @@
+# Name: Musa Saleem
+# Date: 1/16/18
+# Last Modified: 1/16/18
+# Comments: This is the game of breakout that I have created.
+# It is exactly like the classic game of breakout and I made it myself using pygame.
+# I have my main file which is this breakout.py.
+# I also have other files that contributed to it that I had to import, just to keep it in simplest form.
+# The other files are paddle.py, brick.py, ball.py and block.py.
+# This is going to be a part of my final project.
+# Which is going to be changing the bricks and ball and replacing it with images and sounds instead.
+
+
 import pygame, sys
 from pygame.locals import *
 import brick
 import paddle
 import ball
-import random
 
 
 def main():
@@ -47,19 +58,26 @@ def main():
     x = 0
     y = BRICK_Y_OFFSET
 
+    # Defining variables in replace for big names
     q = APPLICATION_HEIGHT - PADDLE_Y_OFFSET
     r = (APPLICATION_WIDTH/2)
+
+    # Defining terms for the paddle and variables for it, bigballer = paddle, and then bliting it to display it
     bigballer = paddle.Paddle(mainSurface, whites[0], PADDLE_WIDTH, PADDLE_HEIGHT)
     bigballer.rect.x = r
     bigballer.rect.y = q
     mainSurface.blit(bigballer.image, bigballer.rect)
     pygame.display.update()
+
+    # Defining the terms for the bricks and the paddle
     brick_group = pygame.sprite.Group()
+    paddle_group = pygame.sprite.Group()
+    paddle_group.add(bigballer)
     ballz = ball.Ball(WHITE, APPLICATION_WIDTH, APPLICATION_HEIGHT, RADIUS_OF_BALL)
     ballz.rect.y = APPLICATION_HEIGHT/2
     ballz.rect.x = APPLICATION_WIDTH/2
 
-
+# This is the function that makes the row of bricks at the top of the screen, makes row of bricks in different colors
     for m in range(BRICKS_PER_ROW):
         x = 0
         color = colors[m]
@@ -73,6 +91,7 @@ def main():
             pygame.display.update()
         y = y + BRICK_HEIGHT + BRICK_SEP
 
+# This is a while statement that I put to make sure when the code has to end
     while True:
         for event in pygame.event.get():
             if event == QUIT:
@@ -82,13 +101,16 @@ def main():
         for bricks in brick_group:
             mainSurface.blit(bricks.image, bricks.rect)
 
+
+# this is moving the paddle and moving the ball on the screen
         bigballer.move()
         mainSurface.blit(bigballer.image, bigballer.rect)
         ballz.move()
         mainSurface.blit(ballz.image, ballz.rect)
         pygame.display.update()
 
-        ballz.collide(paddle_group, brick_group)
+# This is the collide method to make the ball collide with the paddle and also the bricks and displays it on breakout
+        ballz.collide(brick_group)
         if ballz.rect.bottom >= APPLICATION_HEIGHT:
             ballz.rect.x = 205
             ballz.rect.y = 300
@@ -96,6 +118,7 @@ def main():
             if NUM_TURNS == 0:
                 pygame.quit()
                 sys.exit()
+        ballz.collide_paddle(paddle_group)
         if len(brick_group) == 0:
             pygame.quit()
             sys.exit()

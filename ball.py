@@ -5,6 +5,13 @@ import pygame
 class Ball(pygame.sprite.Sprite):
 
    def __init__(self, color, windowWidth, windowHeight, radius):
+       """
+       Defining the paramaters of the color, window width and Window Height and Radius of the ball
+       :param color: White
+       :param windowWidth: WindowWidth
+       :param windowHeight: WindowHeight
+       :param radius: the radius times 2
+       """
        super().__init__()
 
        self.color = color
@@ -21,6 +28,10 @@ class Ball(pygame.sprite.Sprite):
        pygame.display.update()
 
    def move(self):
+       """
+       Moving the ball so it hits off the walls
+       :return:
+       """
        self.rect.top += self.speedy
        self.rect.left += self.speedx
 
@@ -32,8 +43,20 @@ class Ball(pygame.sprite.Sprite):
        elif self.rect.left < 0 or self.rect.right > self.windowWidth:
            self.speedx = -self.speedx
 
-   def collide(self, paddle_group, brick_group):
+   def collide(self, brick_group):
+       """
+       Colliding the ball with the bricks
+       :param brick_group:
+       :return:
+       """
        if pygame.sprite.spritecollide(self, brick_group, True):
            self.speedy = -self.speedy
+
+   def collide_paddle(self, paddle_group):
+       """
+       Colliding the ball with the paddle
+       :param paddle_group:
+       :return:
+       """
        if pygame.sprite.spritecollide(self, paddle_group, False):
            self.speedy = -self.speedy
