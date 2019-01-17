@@ -20,11 +20,10 @@ class Ball(pygame.sprite.Sprite):
        self.windowHeight = windowHeight
        self.speedx = 5
        self.speedy = 5
-       self.image = pygame.Surface((radius * 2, radius * 2))
-       self.image.fill(self.color)
+       self.image = pygame.image.load("Drake.png")
        self.rect = self.image.get_rect()
 
-       pygame.draw.circle(self.image, self.color, (radius, radius), radius, 0)
+       #
        pygame.display.update()
 
    def move(self):

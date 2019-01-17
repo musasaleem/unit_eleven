@@ -24,7 +24,7 @@ def main():
     APPLICATION_HEIGHT = 600
     PADDLE_Y_OFFSET = 30
     BRICKS_PER_ROW = 10
-    BRICK_SEP = 4  # The space between each brick
+    BRICK_SEP = 10 # The space between each brick
     BRICK_Y_OFFSET = 70
     BRICK_WIDTH = (APPLICATION_WIDTH - (BRICKS_PER_ROW -1) * BRICK_SEP) / BRICKS_PER_ROW
     BRICK_HEIGHT = 8
@@ -62,6 +62,13 @@ def main():
     q = APPLICATION_HEIGHT - PADDLE_Y_OFFSET
     r = (APPLICATION_WIDTH/2)
 
+    background_image = pygame.image.load("AstroCover.png")
+    background_rect = background_image.get_rect()
+    background_rect.x = 0
+    background_rect.y = 0
+    mainSurface.blit(background_image, background_rect)
+
+
     # Defining terms for the paddle and variables for it, bigballer = paddle, and then bliting it to display it
     bigballer = paddle.Paddle(mainSurface, whites[0], PADDLE_WIDTH, PADDLE_HEIGHT)
     bigballer.rect.x = r
@@ -97,7 +104,7 @@ def main():
             if event == QUIT:
                 pygame.quit()
                 sys.exit()
-        mainSurface.fill(BLACK)
+        mainSurface.blit(background_image, background_rect)
         for bricks in brick_group:
             mainSurface.blit(bricks.image, bricks.rect)
 
