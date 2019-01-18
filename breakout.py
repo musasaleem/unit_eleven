@@ -24,7 +24,7 @@ def main():
     APPLICATION_HEIGHT = 600
     PADDLE_Y_OFFSET = 30
     BRICKS_PER_ROW = 10
-    BRICK_SEP = 10 # The space between each brick
+    BRICK_SEP = 15 # The space between each brick
     BRICK_Y_OFFSET = 70
     BRICK_WIDTH = (APPLICATION_WIDTH - (BRICKS_PER_ROW -1) * BRICK_SEP) / BRICKS_PER_ROW
     BRICK_HEIGHT = 8
